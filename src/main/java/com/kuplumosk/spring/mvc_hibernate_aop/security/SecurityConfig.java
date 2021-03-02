@@ -1,9 +1,7 @@
 package com.kuplumosk.spring.mvc_hibernate_aop.security;
 
-import com.kuplumosk.spring.mvc_hibernate_aop.service.UserPrincipalDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,13 +16,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserDetailsService userPrincipalDetailService;
-    private LoginSuccessHandler loginSuccessHandler;
+    private final UserDetailsService userDetailsService;
+    private final LoginSuccessHandler loginSuccessHandler;
 
     public SecurityConfig(
-        UserDetailsService userPrincipalDetailService,
+        UserDetailsService userDetailsService,
         LoginSuccessHandler loginSuccessHandler) {
-        this.userPrincipalDetailService = userPrincipalDetailService;
+        this.userDetailsService = userDetailsService;
         this.loginSuccessHandler = loginSuccessHandler;
     }
 
@@ -64,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(this.userPrincipalDetailService);
+        authenticationProvider.setUserDetailsService(userDetailsService);
         return authenticationProvider;
     }
 }
