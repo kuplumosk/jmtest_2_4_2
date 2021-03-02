@@ -61,8 +61,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public List<User> findAllUsers() {
-        List<User> allUsers = userRepository.findAllAndFetchRolesEagerly();
-        return allUsers.stream().sorted((u1, u2) -> (int) (u1.getId() - u2.getId())).collect(Collectors.toList());
+        return userRepository.findAllAndFetchRolesEagerly();
     }
 
     @Override
