@@ -1,9 +1,12 @@
 package com.kuplumosk.spring.mvc_hibernate_aop.service;
 
+import com.kuplumosk.spring.mvc_hibernate_aop.entity.Role;
 import com.kuplumosk.spring.mvc_hibernate_aop.entity.User;
 import com.kuplumosk.spring.mvc_hibernate_aop.repositories.UserRepository;
-import javax.persistence.EntityManager;
-import org.springframework.security.core.Authentication;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,25 +16,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final EntityManager entityManager;
     private final UserRepository userRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository, EntityManager entityManager) {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.entityManager = entityManager;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user =  findOneWithRoles(userRepository.findByUsername(username).getId());
-        return user;
+        User user = userRepository.findByUsername(username);
+        return new org.springframework.security.core.userdetails.User(
+            user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
-    public User findOneWithRoles(Long id) {
-        return entityManager.createQuery(
-            "select u from User u left join fetch u.roles where u.id = :id", User.class)
-                .setParameter("id", id)
-                .getSingleResult();
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 }

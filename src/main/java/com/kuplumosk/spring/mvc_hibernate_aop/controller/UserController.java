@@ -44,7 +44,6 @@ public class UserController {
         return "admin";
     }
 
-
     @GetMapping("admin/new")
     public String addUserPage(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("allRoles", userService.findAllRoles());

@@ -50,14 +50,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User findById(long id) {
-        return userRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
     public List<User> findAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllAndFetchRolesEagerly();
     }
 
     @Override
