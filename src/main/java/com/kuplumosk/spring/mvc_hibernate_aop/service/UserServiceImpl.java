@@ -4,7 +4,9 @@ import com.kuplumosk.spring.mvc_hibernate_aop.entity.Role;
 import com.kuplumosk.spring.mvc_hibernate_aop.entity.User;
 import com.kuplumosk.spring.mvc_hibernate_aop.repositories.RoleRepository;
 import com.kuplumosk.spring.mvc_hibernate_aop.repositories.UserRepository;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -75,5 +77,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Role getRoleById(Long id) {
         return roleRepository.getOne(id);
+    }
+
+    @Override
+    @Transactional
+    public void setRolesToUser(User user, Long[] roles) {
+        Set<Role> roleList = new HashSet<>();
+        for(Long id : roles) {
+            roleList.add(roleRepository.findById(id).orElse(null));
+        }
+        user.setRoles(roleList);
     }
 }

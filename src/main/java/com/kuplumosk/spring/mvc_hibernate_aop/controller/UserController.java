@@ -1,9 +1,10 @@
 package com.kuplumosk.spring.mvc_hibernate_aop.controller;
 
+import com.kuplumosk.spring.mvc_hibernate_aop.entity.Role;
 import com.kuplumosk.spring.mvc_hibernate_aop.entity.User;
 import com.kuplumosk.spring.mvc_hibernate_aop.service.UserService;
-import com.kuplumosk.spring.mvc_hibernate_aop.service.UserServiceImpl;
 import java.security.Principal;
+import java.util.Set;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,10 +54,8 @@ public class UserController {
     }
 
     @PostMapping("/adduser")
-    public String addUser(@ModelAttribute("user") User user, @RequestParam("role_select") Long[] role_select) {
-        for (Long id : role_select) {
-            user.addRole(userService.getRoleById(id));
-        }
+    public String addUser(@ModelAttribute("user") User user, @RequestParam("role_select") Long[] roles ){
+        userService.setRolesToUser(user, roles);
         userService.addUser(user);
         return "redirect:/admin";
     }
@@ -70,10 +69,8 @@ public class UserController {
     }
 
     @PostMapping("admin/update/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @RequestParam("role_select") Long[] roleIds) {
-        for (Long id : roleIds) {
-            user.addRole(userService.getRoleById(id));
-        }
+    public String updateUser(@ModelAttribute("user") User user, @RequestParam("role_select") Long[] roles) {
+        userService.setRolesToUser(user, roles);
         userService.updateUser(user);
         return "redirect:/admin";
     }

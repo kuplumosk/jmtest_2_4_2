@@ -6,8 +6,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@ToString
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
@@ -19,40 +29,8 @@ public class Role implements GrantedAuthority {
     @Column(unique = true)
     private String name;
 
-    public Role() {
-    }
-
-    public Role(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String role) {
-        this.name = name;
-    }
-
     @Override
     public String getAuthority() {
         return name;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            '}';
     }
 }
