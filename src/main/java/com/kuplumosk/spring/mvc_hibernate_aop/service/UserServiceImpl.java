@@ -7,7 +7,6 @@ import com.kuplumosk.spring.mvc_hibernate_aop.repositories.UserRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

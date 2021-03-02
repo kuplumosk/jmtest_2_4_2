@@ -1,10 +1,8 @@
 package com.kuplumosk.spring.mvc_hibernate_aop.controller;
 
-import com.kuplumosk.spring.mvc_hibernate_aop.entity.Role;
 import com.kuplumosk.spring.mvc_hibernate_aop.entity.User;
 import com.kuplumosk.spring.mvc_hibernate_aop.service.UserService;
 import java.security.Principal;
-import java.util.Set;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
