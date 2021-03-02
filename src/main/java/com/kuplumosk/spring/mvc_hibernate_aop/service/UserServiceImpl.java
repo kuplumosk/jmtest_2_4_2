@@ -4,9 +4,14 @@ import com.kuplumosk.spring.mvc_hibernate_aop.entity.Role;
 import com.kuplumosk.spring.mvc_hibernate_aop.entity.User;
 import com.kuplumosk.spring.mvc_hibernate_aop.repositories.RoleRepository;
 import com.kuplumosk.spring.mvc_hibernate_aop.repositories.UserRepository;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.stream.Collectors;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +61,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public List<User> findAllUsers() {
-        return userRepository.findAllAndFetchRolesEagerly();
+        List<User> allUsers = userRepository.findAllAndFetchRolesEagerly();
+        return allUsers.stream().sorted((u1, u2) -> (int) (u1.getId() - u2.getId())).collect(Collectors.toList());
     }
 
     @Override

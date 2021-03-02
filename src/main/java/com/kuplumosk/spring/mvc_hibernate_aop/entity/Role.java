@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 @AllArgsConstructor
 @Data
 @ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {

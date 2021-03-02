@@ -3,7 +3,6 @@ package com.kuplumosk.spring.mvc_hibernate_aop.entity;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,6 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Data
 @Entity
 @ToString
+@EqualsAndHashCode
 @Table(name = "users")
 public class User implements UserDetails {
 

@@ -3,6 +3,7 @@ package com.kuplumosk.spring.mvc_hibernate_aop.service;
 import com.kuplumosk.spring.mvc_hibernate_aop.entity.Role;
 import com.kuplumosk.spring.mvc_hibernate_aop.entity.User;
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
     User findByUsername(String username);
